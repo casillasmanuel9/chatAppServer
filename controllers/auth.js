@@ -21,7 +21,7 @@ const crearUsuario = async (req, res = response) => {
     await usuario.save();
     // Generar mi JWT
 
-    const token = generarJWT(usuario.id);
+    const token = await generarJWT(usuario.id);
 
     return res.json({ ok: true, usuario, token });
   } catch (error) {
@@ -66,7 +66,7 @@ const renewToken = async (req, res = response) => {
   try {
     const usuarioDB = await Usuario.findById(uid);
 
-    res.json({ ok: true, usuarioDB, token });
+    res.json({ ok: true, usuario: usuarioDB, token });
   } catch (error) {
     console.log(error);
     res.status(500).json({ ok: false, msg: "Hable con el administrador" });
